@@ -16,11 +16,11 @@ void main() {
   }
 }
 
-game() {
+int game() {
   int counter = 0;
   int randomNumber = Random().nextInt(100) + 1;
   print('Я загадал число от 1 до 100, попробуй его отгадать');
-  while (counter <= 7) {
+  do {
     counter++;
     int number = int.tryParse(stdin.readLineSync() ?? '') ?? 0;
     if (counter <= 7) {
@@ -38,7 +38,7 @@ game() {
     } else {
       print('Число не верно, вы проиграли');
     }
-  }
+  } while (counter <= 7);
   return counter;
 }
 
@@ -47,13 +47,13 @@ gameTwo() {
   print('Я буду пытаться угадать!');
   int counter = 0;
   int myNumber = int.tryParse(stdin.readLineSync() ?? '') ?? 0;
-  int lowerLimit = 1;
-  int upperLimit = 100;
+  int lowLimit = 1;
+  int upLimit = 100;
   String otvet;
-  while (counter <= 7) {
-    int varriant = lowerLimit +
-        ((upperLimit - lowerLimit) ~/
-            2); //До этой формулы я так и не смог додумался, нашел её на Reddit, я делал просто varriant = (upperLimit - lowerLimit) ~/ 2
+  do {
+    int varriant = lowLimit +
+        ((upLimit - lowLimit) ~/
+            2); //До этой формулы я так и не смог додумался, нашел её на Reddit, я делал просто varriant = (uppLimit - lowLimit) ~/ 2
     print('Ваше число $varriant? (yes/no)');
     otvet = stdin.readLineSync()!;
     if (otvet == 'yes') {
@@ -66,9 +66,9 @@ gameTwo() {
       print('Больше или меньше загаданного числа? (больше/меньше)');
       String otvet = stdin.readLineSync()!.toLowerCase();
       if (otvet == 'more') {
-        lowerLimit = varriant;
+        lowLimit = varriant;
       } else if (otvet == 'less') {
-        upperLimit = varriant;
+        upLimit = varriant;
       } else {
         print('Некорректный ответ. Пожалуйста, ответьте "less" или "more".');
       }
@@ -78,7 +78,7 @@ gameTwo() {
       print('Попытки закончились, игра закончена');
       break;
     }
-  }
+  } while (counter <= 7);
   return counter;
 }
 
@@ -90,7 +90,7 @@ gameThree() {
       'Добро пожаловать в игру соревнование \nИгра будет состоять из нескольких раундов, игрок который угадал максимальное количество чисел за меньшее число попыток выиграл');
   print('Выберите число раундов до 10');
   int round = int.tryParse(stdin.readLineSync() ?? '') ?? 3;
-  while (roundScore < round) {
+  do {
     print('============================');
     print('Раунд $roundScore');
     int userCounter = game();
@@ -99,7 +99,7 @@ gameThree() {
     roundScore++;
     userScore += userCounter;
     aiScore += aiCounter;
-  }
+  } while (roundScore <= round);
   if (userScore > aiScore) {
     print('Победил компьютер');
   } else if (userScore < aiScore) {
